@@ -41,11 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Smooth scroll to top when clicked
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
+// smooth scroll
+backToTopBtn.addEventListener('click', () => {
+  const scrollStep = -window.scrollY / (500 / 15);
+  
+  const scrollInterval = setInterval(() => {
+    if (window.scrollY !== 0) {
+      window.scrollBy(0, scrollStep);
+    } else {
+      clearInterval(scrollInterval);
+    }
+  }, 15);
+});
+
 });
