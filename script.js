@@ -1,5 +1,42 @@
 
-
+// Mobile Menu Toggle
+document.addEventListener('DOMContentLoaded', () => {
+  // Create hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'hamburger';
+  hamburger.setAttribute('aria-label', 'Toggle menu');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.innerHTML = `
+    <span></span>
+    <span></span>
+    <span></span>
+  `;
+  
+  // Insert hamburger into navbar
+  const navbar = document.querySelector('.navbar');
+  const navCenter = document.querySelector('.nav-center');
+  
+  if (navbar && navCenter) {
+    navbar.insertBefore(hamburger, navCenter);
+    
+    // Toggle menu
+    hamburger.addEventListener('click', () => {
+      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !isExpanded);
+      navCenter.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+    
+    // Close menu when clicking a link
+    navCenter.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navCenter.classList.remove('active');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+});
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(link => {
