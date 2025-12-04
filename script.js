@@ -92,3 +92,50 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 });
+
+// Featured Blog Posts on Homepage
+document.addEventListener('DOMContentLoaded', () => {
+  const featuredContainer = document.getElementById('featured-posts');
+  
+  if (featuredContainer) {
+    const featuredPosts = [
+      {
+        title: "Gender Inclusion, Gender Exclusion, and Safety Delusions in Mexican Ska Festivals",
+        excerpt: "Presented at the Society for Ethnomusicology Annual Meeting. Examining gendered spaces in Mexican ska festivals through fieldwork in Mexico City and Tijuana.",
+        image: "images/sem2024.webp",
+        url: "blog-one.html",
+        date: "2024"
+      },
+      {
+        title: "Looking into Florence B. Price's 'Five Folksongs in Counterpoint'",
+        excerpt: "Analyzing Price's compositional identity and her intersectionality as a southern-born, conservatory-trained African American woman through her string quartet.",
+        image: "images/blog2.webp",
+        url: "blog-two.html",
+        date: "2024"
+      },
+      {
+        title: "A Spoonful of Levity Helps the Racism Go Down",
+        excerpt: "Investigating coon songs, a comic genre popularized by blackface minstrelsy, and how these songs furthered racist stereotypes and legislation.",
+        image: "images/coon-songs.webp",
+        url: "blog-three.html",
+        date: "2021"
+      }
+    ];
+    
+    featuredPosts.forEach(post => {
+      const article = document.createElement('article');
+      article.className = 'featured-post';
+      article.innerHTML = `
+        <a href="${post.url}">
+          <img src="${post.image}" alt="${post.title}" loading="lazy">
+          <div class="post-content">
+            <span class="post-date">${post.date}</span>
+            <h3>${post.title}</h3>
+            <p>${post.excerpt}</p>
+          </div>
+        </a>
+      `;
+      featuredContainer.appendChild(article);
+    });
+  }
+});
