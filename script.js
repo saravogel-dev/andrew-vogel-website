@@ -141,6 +141,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+  // Sticky Header with Scroll Effect
+  let lastScroll = 0;
+  const navbar = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    
+    // Add 'scrolled' class when scrolled down
+    if (currentScroll > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  });
+
 // ============================================
 // Smooth Scroll for Anchor Links
 // ============================================
