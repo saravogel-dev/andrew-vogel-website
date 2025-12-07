@@ -137,46 +137,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ============================================
   // Sticky Header with Scroll Effect
-  // MOVED INSIDE - THIS IS THE FIX!
   // ============================================
-  let lastScroll = 0;
+  const stickyNavbar = document.querySelector('.navbar');
+  
+  if (stickyNavbar) {
+    let lastScroll = 0;
 
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    
-    if (currentScroll > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-  });
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      
+      if (currentScroll > 50) {
+        stickyNavbar.classList.add('scrolled');
+      } else {
+        stickyNavbar.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  }
 
-}); // ← END OF DOMContentLoaded - this closing bracket was missing the sticky header code!
-
-// ============================================
-// Smooth Scroll for Anchor Links
-// ============================================
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(link.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
+  // ============================================
+  // Smooth Scroll for Anchor Links
+  // ============================================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
     });
   });
-});
 
-// ============================================
-// Scroll Animations
-// ============================================
-const elements = document.querySelectorAll('.scroll-animate');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
-  });
-}, { threshold: 0.1 });
+  // ============================================
+  // Scroll Animations
+  // ============================================
+  const elements = document.querySelectorAll('.scroll-animate');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  elements.forEach(el => observer.observe(el));
 
-elements.forEach(el => observer.observe(el));
+}); 
