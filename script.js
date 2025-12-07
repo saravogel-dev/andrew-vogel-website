@@ -38,6 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Active Navigation Highlighting
+document.addEventListener('DOMContentLoaded', () => {
+  const navLinks = document.querySelectorAll('.nav-center a');
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  
+  navLinks.forEach(link => {
+    const linkPage = link.getAttribute('href');
+    
+    // Check if this link matches current page
+    if (linkPage === currentPage || 
+        (currentPage === '' && linkPage === 'index.html') ||
+        (currentPage === 'index.html' && linkPage === 'index.html')) {
+      link.classList.add('active');
+    }
+    
+    // Special case: highlight "Half-Brewed Blog" when on any blog post
+    if (linkPage === 'blog.html' && currentPage.startsWith('blog-')) {
+      link.classList.add('active');
+    }
+  });
+});
+
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {

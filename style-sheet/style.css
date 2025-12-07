@@ -143,6 +143,31 @@ h3 {
   background-color: #b0c4b1;
 }
 
+/* Active Navigation Link */
+.nav-center a.active {
+  color: #4a5759;
+  font-weight: 700;
+  position: relative;
+}
+
+.nav-center a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4a5759;
+}
+
+.nav-center a.active:hover {
+  color: #b0c4b1;
+}
+
+.nav-center a.active:hover::after {
+  background-color: #b0c4b1;
+}
+
 /* ==========================================================================
    Main Sections
    ========================================================================== */
