@@ -42,22 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.nav-center a');
   const currentPath = window.location.href;
   
-  // First, remove all active classes
   navLinks.forEach(link => link.classList.remove('active'));
   
-  // Then add active to the correct link
   navLinks.forEach(link => {
     const linkHref = link.getAttribute('href');
     
-    // For blog posts (blog-one.html, blog-two.html, etc.)
     if (currentPath.includes('blog-') && linkHref === 'blog.html') {
       link.classList.add('active');
     }
-    // For exact page matches
     else if (currentPath.endsWith(linkHref)) {
       link.classList.add('active');
     }
-    // For index/home page
     else if ((currentPath.endsWith('/') || currentPath.endsWith('index.html')) && 
              linkHref === 'index.html') {
       link.classList.add('active');
@@ -139,16 +134,16 @@ document.addEventListener('DOMContentLoaded', () => {
       featuredContainer.appendChild(article);
     });
   }
-});
 
+  // ============================================
   // Sticky Header with Scroll Effect
+  // MOVED INSIDE - THIS IS THE FIX!
+  // ============================================
   let lastScroll = 0;
-  const navbar = document.querySelector('.navbar');
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
     
-    // Add 'scrolled' class when scrolled down
     if (currentScroll > 50) {
       navbar.classList.add('scrolled');
     } else {
@@ -157,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     lastScroll = currentScroll;
   });
+
+}); // ← END OF DOMContentLoaded - this closing bracket was missing the sticky header code!
 
 // ============================================
 // Smooth Scroll for Anchor Links
