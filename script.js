@@ -1,7 +1,9 @@
-
-// Mobile Menu Toggle
+// All initialization when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  // Create hamburger button
+  
+  // ============================================
+  // Mobile Menu Toggle
+  // ============================================
   const hamburger = document.createElement('button');
   hamburger.className = 'hamburger';
   hamburger.setAttribute('aria-label', 'Toggle menu');
@@ -12,14 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     <span></span>
   `;
   
-  // Insert hamburger into navbar
   const navbar = document.querySelector('.navbar');
   const navCenter = document.querySelector('.nav-center');
   
   if (navbar && navCenter) {
     navbar.insertBefore(hamburger, navCenter);
     
-    // Toggle menu
     hamburger.addEventListener('click', () => {
       const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
       hamburger.setAttribute('aria-expanded', !isExpanded);
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.toggle('active');
     });
     
-    // Close menu when clicking a link
     navCenter.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navCenter.classList.remove('active');
@@ -36,54 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-});
 
-// Active Navigation Highlighting
-document.addEventListener('DOMContentLoaded', () => {
+  // ============================================
+  // Active Navigation Highlighting
+  // ============================================
   const navLinks = document.querySelectorAll('.nav-center a');
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPath = window.location.href;
   
+  // First, remove all active classes
+  navLinks.forEach(link => link.classList.remove('active'));
+  
+  // Then add active to the correct link
   navLinks.forEach(link => {
-    const linkPage = link.getAttribute('href');
+    const linkHref = link.getAttribute('href');
     
-    // Check if this link matches current page
-    if (linkPage === currentPage || 
-        (currentPage === '' && linkPage === 'index.html') ||
-        (currentPage === 'index.html' && linkPage === 'index.html')) {
+    // For blog posts (blog-one.html, blog-two.html, etc.)
+    if (currentPath.includes('blog-') && linkHref === 'blog.html') {
       link.classList.add('active');
     }
-    
-    // Special case: highlight "Half-Brewed Blog" when on any blog post
-    if (linkPage === 'blog.html' && currentPage.startsWith('blog-')) {
+    // For exact page matches
+    else if (currentPath.endsWith(linkHref)) {
+      link.classList.add('active');
+    }
+    // For index/home page
+    else if ((currentPath.endsWith('/') || currentPath.endsWith('index.html')) && 
+             linkHref === 'index.html') {
       link.classList.add('active');
     }
   });
-});
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(link.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
-  });
-});
-
-  const elements = document.querySelectorAll('.scroll-animate');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.1 });
-  
-  elements.forEach(el => observer.observe(el));
-
+  // ============================================
   // Back to Top Button
-document.addEventListener('DOMContentLoaded', () => {
-  // Create the button dynamically
+  // ============================================
   const backToTopBtn = document.createElement('button');
   backToTopBtn.id = 'back-to-top';
   backToTopBtn.className = 'back-to-top-btn';
@@ -91,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
   backToTopBtn.innerHTML = '↑';
   document.body.appendChild(backToTopBtn);
 
-  // Show/hide button based on scroll position
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       backToTopBtn.classList.add('show');
@@ -100,23 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-// smooth scroll
-backToTopBtn.addEventListener('click', () => {
-  const scrollStep = -window.scrollY / (500 / 15);
-  
-  const scrollInterval = setInterval(() => {
-    if (window.scrollY !== 0) {
-      window.scrollBy(0, scrollStep);
-    } else {
-      clearInterval(scrollInterval);
-    }
-  }, 15);
-});
+  backToTopBtn.addEventListener('click', () => {
+    const scrollStep = -window.scrollY / (500 / 15);
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+      } else {
+        clearInterval(scrollInterval);
+      }
+    }, 15);
+  });
 
-});
-
-// Featured Blog Posts on Homepage
-document.addEventListener('DOMContentLoaded', () => {
+  // ============================================
+  // Featured Blog Posts on Homepage
+  // ============================================
   const featuredContainer = document.getElementById('featured-posts');
   
   if (featuredContainer) {
@@ -130,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         title: "Looking into Florence B. Price's 'Five Folksongs in Counterpoint'",
-        excerpt: "Analyzing Price's compositional identity and her intersectionality as a southern-born, conservatory-trained African American woman through her string quartet.",
+        excerpt: "Analyzing Price's compositional identity and her intersectionality as a southern-born, conservatory trained African American woman through her string quartet.",
         image: "images/blog2.webp",
         url: "blog-two.html",
         date: "2024"
@@ -161,3 +140,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ============================================
+// Smooth Scroll for Anchor Links
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+
+// ============================================
+// Scroll Animations
+// ============================================
+const elements = document.querySelectorAll('.scroll-animate');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, { threshold: 0.1 });
+
+elements.forEach(el => observer.observe(el));
